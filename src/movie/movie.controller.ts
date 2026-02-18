@@ -1,15 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
-  Headers,
   Param,
   Post,
-  Query,
-  Req,
-  Res,
+  Put,
 } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import { MovieDto } from './dto/movie.dto';
 import { MovieService } from './movie.service';
 
 @Controller({ path: 'movies' })
@@ -17,37 +15,27 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   @Get()
-  getAll(@Query() query: any) {
-    return `Movies by parameters: ${JSON.stringify(query)}`;
-  }
-
-  @Post()
-  create(@Body() body: { title: string; genre: string }) {
-    return body;
-  }
-
-  @Get('headers')
-  getHeaders(@Headers() headers: any) {
-    return headers;
-  }
-
-  @Get('user-agent')
-  getUserAgent(@Headers('user-agent') header: any) {
-    return { header };
-  }
-
-  @Get('request')
-  getRequestDetails(@Req() request: Request) {
-    return request.method;
-  }
-
-  @Get('response')
-  getRsponseDetails(@Res() response: Response) {
-    return response.status(200).json({ message: 'Response' });
+  findAll() {
+    return this.movieService.findAll();
   }
 
   @Get(':id')
-  getParams(@Param('id') id: string) {
-    return { id };
+  findById(@Param('id') id: string) {
+    return this.movieService.findById(id);
+  }
+
+  @Post()
+  create(@Body() dto: MovieDto) {
+    return this.movieService.create(dto);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() dto: MovieDto) {
+    return this.movieService.update(id, dto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.movieService.delete(id);
   }
 }
