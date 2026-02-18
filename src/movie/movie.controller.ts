@@ -7,8 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { MovieDto } from './dto/movie.dto';
 import { MovieService } from './movie.service';
+import { MovieDto } from './dto/movie.dto';
 
 @Controller({ path: 'movies' })
 export class MovieController {
