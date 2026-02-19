@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Movie } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { MovieDto } from './dto/movie.dto';
+import { MovieRequestDto } from './dto/movie.dto';
 
 @Injectable()
 export class MovieService {
@@ -30,7 +30,7 @@ export class MovieService {
     return movie;
   }
 
-  async create(dto: MovieDto): Promise<Movie> {
+  async create(dto: MovieRequestDto): Promise<Movie> {
     const { title, releaseYear, actorIds, imageUrl } = dto;
     const actors = await this.prisma.actor.findMany({
       where: { id: { in: actorIds } },
@@ -47,7 +47,7 @@ export class MovieService {
     });
   }
 
-  async update(id: string, dto: MovieDto): Promise<Movie> {
+  async update(id: string, dto: MovieRequestDto): Promise<Movie> {
     const { title, releaseYear, imageUrl } = dto;
     const movie = await this.findById(id);
     const actors = await this.prisma.actor.findMany({
