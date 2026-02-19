@@ -35,6 +35,12 @@ export class AuthService {
     this.COOKIE_DOMAIN = configService.getOrThrow<string>('COOKIE_DOMAIN');
   }
 
+  async validate(id: string) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
+  }
+
   private setCookie(response: Response, value: string, expires: Date) {
     response.cookie('refreshToken', value, {
       httpOnly: true,

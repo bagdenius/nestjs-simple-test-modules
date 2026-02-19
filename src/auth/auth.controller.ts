@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -16,7 +17,10 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
+import type { User } from '../generated/prisma/client';
 import { AuthService } from './auth.service';
+import { Authorization } from './decorators/authorization.decorator';
+import { Authorized } from './decorators/authorized.decorator';
 import { AuthResponse } from './dto/auth.dto';
 import { LoginRequestDto } from './dto/login.dto';
 import { SignupRequestDto } from './dto/signup.dto';
@@ -85,5 +89,12 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     return await this.authService.refresh(request, response);
+  }
+
+  @Get('@me')
+  @Authorization()
+  @HttpCode(HttpStatus.OK)
+  async me(@Authorized('id') id: string) {
+    return { id };
   }
 }
