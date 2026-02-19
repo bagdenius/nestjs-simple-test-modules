@@ -1,11 +1,16 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { hash } from 'argon2';
+import { hash, verify } from 'argon2';
+import { StringValue } from 'ms';
 import { PrismaService } from '../prisma/prisma.service';
+import { LoginRequestDto } from './dto/login.dto';
 import { SignupRequestDto } from './dto/signup.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { StringValue } from 'ms';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +32,17 @@ export class AuthService {
     );
   }
 
+  private async generateTokens(id: string) {
+    const payload: JwtPayload = { id };
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: this.JWT_ACCESS_TOKEN_TTL,
+    });
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: this.JWT_REFRESH_TOKEN_TTL,
+    });
+    return { accessToken, refreshToken };
+  }
+
   async signup(dto: SignupRequestDto) {
     const { name, email, password } = dto;
     const existUser = await this.prisma.user.findUnique({
@@ -43,14 +59,14 @@ export class AuthService {
     return this.generateTokens(user.id);
   }
 
-  private async generateTokens(id: string) {
-    const payload: JwtPayload = { id };
-    const accessToken = this.jwtService.sign(payload, {
-      expiresIn: this.JWT_ACCESS_TOKEN_TTL,
+  async login(dto: LoginRequestDto) {
+    const { email, password } = dto;
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      select: { id: true, password: true },
     });
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: this.JWT_REFRESH_TOKEN_TTL,
-    });
-    return { accessToken, refreshToken };
+    if (!user || !(await verify(user.password, password)))
+      throw new UnauthorizedException('Invalid email or password');
+    return this.generateTokens(user.id);
   }
 }
