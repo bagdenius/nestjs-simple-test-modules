@@ -24,7 +24,10 @@ type Mutation {
 }
 
 type Query {
+  """Returns current user"""
   getMe: UserModel!
+
+  """Returns list of all users. Requires admin role credentials"""
   getUsers: [UserModel!]!
 }
 
@@ -34,16 +37,31 @@ input SignupInput {
   password: String!
 }
 
+"""Model of User"""
 type UserModel {
+  """Date the model was created"""
   createdAt: DateTime!
+
+  """User account email"""
   email: String!
+
+  """Model identificator"""
   id: ID!
+
+  """Name of the user"""
   name: String!
+
+  """User account password"""
   password: String!
+
+  """User account role"""
   role: UserRole!
+
+  """Date of last update of the model"""
   updatedAt: DateTime!
 }
 
+"""Roles for user model"""
 enum UserRole {
   ADMIN
   USER

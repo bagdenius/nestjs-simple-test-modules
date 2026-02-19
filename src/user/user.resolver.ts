@@ -9,14 +9,16 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => UserModel)
+  @Query(() => UserModel, { description: 'Returns current user' })
   @Authorization()
   getMe(@Authorized() user: User) {
     return user;
   }
 
   @Authorization(UserRole.ADMIN)
-  @Query(() => [UserModel])
+  @Query(() => [UserModel], {
+    description: 'Returns list of all users. Requires admin role credentials',
+  })
   async getUsers() {
     return await this.userService.getAll();
   }
