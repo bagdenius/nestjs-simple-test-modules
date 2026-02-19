@@ -1,15 +1,16 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import ms, { type StringValue } from 'ms';
 import { PrismaService } from '../prisma/prisma.service';
-import { isDev } from '../utils/isDev.utils';
+import { isDev } from '../utils/isDev.util';
 import type { LoginRequestDto } from './dto/login.dto';
 import type { SignupRequestDto } from './dto/signup.dto';
 import type { JwtPayload } from './interfaces/jwt-payload.interface';
@@ -42,6 +43,20 @@ export class AuthService {
       secure: !isDev(this.configService),
       sameSite: isDev(this.configService) ? 'none' : 'lax',
     });
+  }
+
+  async refresh(request: Request, response: Response) {
+    const refreshToken = request.cookies.refreshToken;
+    if (!refreshToken) throw new UnauthorizedException('Invalid refresh token');
+    const payload: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
+    if (payload) {
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.id },
+        select: { id: true },
+      });
+      if (!user) throw new NotFoundException('User not found');
+      return this.auth(response, user.id);
+    }
   }
 
   private auth(response: Response, id: string) {
@@ -90,5 +105,10 @@ export class AuthService {
     if (!user || !(await verify(user.password, password)))
       throw new UnauthorizedException('Invalid email or password');
     return this.auth(response, user.id);
+  }
+
+  async logout(response: Response) {
+    this.setCookie(response, 'refreshToken', new Date(0));
+    return true;
   }
 }
