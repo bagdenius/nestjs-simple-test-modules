@@ -1,9 +1,9 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { UserService } from './user.service';
-import { UserModel } from './models/user.model';
 import { Authorization } from '../auth/decorators/authorization.decorator';
 import { Authorized } from '../auth/decorators/authorized.guard';
-import type { User } from '../generated/prisma/client';
+import { UserRole, type User } from '../generated/prisma/client';
+import { UserModel } from './models/user.model';
+import { UserService } from './user.service';
 
 @Resolver()
 export class UserResolver {
@@ -15,8 +15,9 @@ export class UserResolver {
     return user;
   }
 
+  @Authorization(UserRole.ADMIN)
   @Query(() => [UserModel])
-  getUsers() {
-    return this.userService.findAll();
+  async getUsers() {
+    return await this.userService.getAll();
   }
 }
