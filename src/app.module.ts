@@ -15,6 +15,7 @@ import { FileModule } from './file/file.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SpotifyModule } from './spotify/spotify.module';
 import { UserModule } from './user/user.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UserModule } from './user/user.module';
       rootPath: path.join(__dirname, '..', '..', 'uploads'),
       serveRoot: '/static',
     }),
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
