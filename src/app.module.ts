@@ -13,6 +13,8 @@ import { FileModule } from './file/file.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SpotifyModule } from './spotify/spotify.module';
 import { UserModule } from './user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import path from 'path';
 
 @Module({
   imports: [
@@ -37,6 +39,10 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService],
     }),
     FileModule,
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', '..', 'uploads'),
+      serveRoot: '/static',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

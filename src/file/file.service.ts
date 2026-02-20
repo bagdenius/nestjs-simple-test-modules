@@ -5,7 +5,7 @@ import path from 'path';
 @Injectable()
 export class FileService {
   upload(file: Express.Multer.File) {
-    const uploadDir = path.join(process.cwd(), 'uploads');
+    const uploadDir = path.join(__dirname, '..', '..', '..', 'uploads');
     const filename = path.parse(file.originalname).name;
     const extention = path.parse(file.originalname).ext;
     const filePath = path.join(
