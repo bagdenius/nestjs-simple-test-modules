@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
@@ -9,6 +9,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
+  app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.enableCors({
     origin: config.getOrThrow<string>('ALLOWED_ORIGINS').split(','),
     credentials: true,
