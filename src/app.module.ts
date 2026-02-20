@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { SpotifyModule } from './spotify/spotify.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { getSpotifyConfig } from './config/spotify.config';
 
 @Module({
   imports: [
@@ -29,7 +30,11 @@ import { AppService } from './app.service';
     UserModule,
     ChatModule,
     ArtistModule,
-    SpotifyModule,
+    SpotifyModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: getSpotifyConfig,
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,31 +1,30 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import type { ArtistResponse } from './interfaces/artist.interface';
 import type { AuthResponse } from './interfaces/auth-response.interface';
 import { AlbumResponse } from './interfaces/album.interface';
+import {
+  type SpotifyOptions,
+  SpotifyOptionsSymbol,
+} from './interfaces/spotify-options.interface';
 
 @Injectable()
 export class SpotifyService {
   private accessToken: string | null;
   private tokenExpriry: number = 0;
 
-  private readonly CLIENT_ID: string;
-  private readonly CLIENT_SECRET: string;
-
   constructor(
+    @Inject(SpotifyOptionsSymbol) private options: SpotifyOptions,
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
-  ) {
-    this.CLIENT_ID = configService.getOrThrow('SPOTIFY_CLIENT_ID');
-    this.CLIENT_SECRET = configService.getOrThrow('SPOTIFY_CLIENT_SECRET');
-  }
+  ) {}
 
   private async authenticate(): Promise<void> {
     if (this.accessToken && Date.now() < this.tokenExpriry) return;
     const credentials = Buffer.from(
-      `${this.CLIENT_ID}:${this.CLIENT_SECRET}`,
+      `${this.options.clientId}:${this.options.clientSecret}`,
     ).toString('base64');
     const response = await firstValueFrom(
       this.httpService.post<AuthResponse>(
