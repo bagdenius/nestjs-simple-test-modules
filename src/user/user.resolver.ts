@@ -1,9 +1,9 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { Authorization } from '../auth/decorators/authorization.decorator';
 import { Authorized } from '../auth/decorators/authorized.guard';
-import { UserRole, type User } from '../generated/prisma/client';
 import { UserModel } from './models/user.model';
 import { UserService } from './user.service';
+import { type User, UserRole } from '@prisma/client';
 
 @Resolver()
 export class UserResolver {

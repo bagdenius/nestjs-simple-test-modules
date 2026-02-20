@@ -1,7 +1,7 @@
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+  provider = "prisma-client-js"
+  // output       = "../src/generated/prisma"
+  // moduleFormat = "cjs"
 }
 
 datasource db {
@@ -32,4 +32,14 @@ model Message {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("messages")
+}
+
+model Artist {
+  id        String   @id @default(uuid())
+  name      String
+  genre     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("artists")
 }
