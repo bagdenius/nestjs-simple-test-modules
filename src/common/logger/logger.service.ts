@@ -3,7 +3,7 @@ import { appendFileSync, existsSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
 
 export class CustomLogger implements LoggerService {
-  private readonly logFile = join(__dirname, '../../../../logs/app.log');
+  private readonly logFile = join(process.cwd(), 'logs', 'app.log');
   private readonly consoleLogger = new ConsoleLogger();
 
   private writeToFile(

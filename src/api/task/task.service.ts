@@ -7,16 +7,16 @@ export class TaskService {
 
   @Cron(CronExpression.EVERY_10_SECONDS)
   handleCron() {
-    this.logger.log('CRON task executes every 10 seconds');
+    // this.logger.log('CRON task executes every 10 seconds');
   }
 
   @Interval(1000)
   handleInterval() {
-    this.logger.log('Interval task executes every second');
+    // this.logger.log('Interval task executes every second');
   }
 
   @Timeout(5000)
   handleTimeout() {
-    this.logger.log('Timeout task after 5 seconds after start');
+    // this.logger.log('Timeout task after 5 seconds after start');
   }
 }

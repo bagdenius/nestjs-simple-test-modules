@@ -1,6 +1,6 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { BaseModel } from '../../common/models/base.model';
 import { User, UserRole } from '@prisma/client';
+import { BaseModel } from '../../../common/models/base.model';
 
 registerEnumType(UserRole, {
   name: 'UserRole',

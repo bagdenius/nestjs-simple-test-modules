@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SpotifyService } from './spotify/spotify.service';
+import { SpotifyService } from './api/spotify/spotify.service';
 
 @Injectable()
 export class AppService {

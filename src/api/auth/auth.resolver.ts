@@ -1,5 +1,5 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import type { GqlContext } from '../common/interfaces/gql-context.interface';
+import type { GqlContext } from '../../common/interfaces/gql-context.interface';
 import { AuthService } from './auth.service';
 import { LoginInput } from './inputs/login.input';
 import { SignupInput } from './inputs/signup.input';
