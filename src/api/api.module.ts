@@ -9,6 +9,7 @@ import { ArtistModule } from './artist/artist.module';
 import { AuthModule } from './auth/auth.module';
 import { ChatModule } from './chat/chat.module';
 import { FileModule } from './file/file.module';
+import { LinkModule } from './link/link.module';
 import { SpotifyModule } from './spotify/spotify.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
@@ -23,8 +24,10 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule,
     UserModule,
+    LinkModule,
     ChatModule,
     ArtistModule,
+    TaskModule,
     SpotifyModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: getSpotifyConfig,
@@ -35,7 +38,6 @@ import { UserModule } from './user/user.module';
       rootPath: path.join(process.cwd(), 'uploads'),
       serveRoot: '/static',
     }),
-    TaskModule,
   ],
 })
 export class ApiModule {}
