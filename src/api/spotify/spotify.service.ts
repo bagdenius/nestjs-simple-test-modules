@@ -2,13 +2,13 @@ import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
-import type { ArtistResponse } from './interfaces/artist.interface';
-import type { AuthResponse } from './interfaces/auth-response.interface';
-import { AlbumResponse } from './interfaces/album.interface';
+import type { ArtistResponse } from '../../common/interfaces/artist.interface';
+import type { AuthResponse } from '../../common/interfaces/auth-response.interface';
+import { AlbumResponse } from '../../common/interfaces/album.interface';
 import {
   type SpotifyOptions,
   SpotifyOptionsSymbol,
-} from './interfaces/spotify-options.interface';
+} from '../../common/interfaces/spotify-options.interface';
 
 @Injectable()
 export class SpotifyService {

@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { SpotifyOptions } from '../api/spotify/interfaces/spotify-options.interface';
+import { SpotifyOptions } from '../common/interfaces/spotify-options.interface';
 
 export function getSpotifyConfig(configService: ConfigService): SpotifyOptions {
   return {

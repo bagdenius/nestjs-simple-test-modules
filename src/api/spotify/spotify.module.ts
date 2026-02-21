@@ -4,7 +4,7 @@ import {
   type SpotifyAsyncOptions,
   type SpotifyOptions,
   SpotifyOptionsSymbol,
-} from './interfaces/spotify-options.interface';
+} from '../../common/interfaces/spotify-options.interface';
 import { SpotifyService } from './spotify.service';
 
 @Module({})
