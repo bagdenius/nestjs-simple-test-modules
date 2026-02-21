@@ -1,9 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { v4 as uuidv4 } from 'uuid';
-import { Artist } from '../generated/prisma/client';
 import { ArtistController } from './artist.controller';
 import { ArtistService } from './artist.service';
+import { Artist } from '@prisma/client';
 
 const artistId = uuidv4();
 const artist: Artist = {

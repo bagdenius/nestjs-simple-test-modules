@@ -27,9 +27,9 @@ describe('ArtistController (e2e)', () => {
     await app.close();
   });
 
-  it('POST /artists - should create artist', async () => {
+  it('POST /v1/artists - should create artist', async () => {
     const response = await request(app.getHttpServer())
-      .post('/artists')
+      .post('/v1/artists')
       .send(dto)
       .expect(201);
 
@@ -37,9 +37,9 @@ describe('ArtistController (e2e)', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('GET /artists/:id - should return an artist by id', async () => {
+  it('GET /v1/artists/:id - should return an artist by id', async () => {
     const created = await request(app.getHttpServer())
-      .post('/artists')
+      .post('/v1/artists')
       .send(dto)
       .expect(201);
     const artistId = created.body.id;
@@ -53,9 +53,9 @@ describe('ArtistController (e2e)', () => {
     });
   });
 
-  it('GET /artists/:id - should return 404 not found', async () => {
+  it('GET /v1/artists/:id - should return 404 not found', async () => {
     await request(app.getHttpServer())
-      .get('/artists/non-existent-id')
+      .get('/v1/artists/non-existent-id')
       .expect(404);
   });
 });

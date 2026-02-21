@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { v4 as uuidv4 } from 'uuid';
-import { Artist } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { ArtistService } from './artist.service';
 import { ArtistDto } from './dto/artist.dto';
 import { NotFoundException } from '@nestjs/common';
+import { Artist } from '@prisma/client';
 
 const artistId = uuidv4();
 const artists: Artist[] = [
