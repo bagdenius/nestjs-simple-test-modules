@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ArtistService } from './artist.service';
-import { ArtistDto } from './dto/artist.dto';
+import { ArtistDto } from './dto';
 
 @Controller('artists')
 export class ArtistController {

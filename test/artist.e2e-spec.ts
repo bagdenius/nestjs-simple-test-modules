@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
-import { ArtistDto } from '../src/api/artist/dto/artist.dto';
+import { ArtistDto } from '../src/api/artist/dto';
 import { PrismaService } from '../src/infra/prisma/prisma.service';
 
 const dto: ArtistDto = { name: 'Post Malone', genre: 'Hip-Hop' };

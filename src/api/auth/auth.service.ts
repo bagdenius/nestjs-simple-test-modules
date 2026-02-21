@@ -9,11 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
 import ms, { type StringValue } from 'ms';
-import { PrismaService } from '../../infra/prisma/prisma.service';
-import type { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
-import { SignupInput } from './inputs/signup.input';
-import { LoginInput } from './inputs/login.input';
+import type { JwtPayload } from '../../common/interfaces';
 import { isDev } from '../../common/utils';
+import { PrismaService } from '../../infra/prisma/prisma.service';
+import { LoginInput, SignupInput } from './inputs';
 
 @Injectable()
 export class AuthService {

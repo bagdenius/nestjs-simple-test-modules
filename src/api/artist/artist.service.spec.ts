@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaService } from '../../infra/prisma/prisma.service';
 import { ArtistService } from './artist.service';
-import { ArtistDto } from './dto/artist.dto';
+import { ArtistDto } from './dto';
 import { NotFoundException } from '@nestjs/common';
 import { Artist } from '@prisma/client';
 
