@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SpotifyService } from './api/spotify/spotify.service';
-import { PrismaService } from './infra/prisma/prisma.service';
+import { PrismaService } from './infra/prisma';
 
 @Injectable()
 export class AppService {
@@ -32,5 +32,12 @@ export class AppService {
     const link = await this.prisma.link.findUnique({ where: { shortCode } });
     if (!link) throw new NotFoundException('Link not found');
     return link;
+  }
+
+  async trackClick(shortCode: string, ipAddress: string, userAgent: string) {
+    const link = await this.getLinkByShortCode(shortCode);
+    await this.prisma.click.create({
+      data: { ipAddress, userAgent, link: { connect: { id: link.id } } },
+    });
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomBytes } from 'crypto';
-import { PrismaService } from '../../infra/prisma/prisma.service';
 import { CreateLinkDto } from './dto';
+import { PrismaService } from '../../infra/prisma';
 
 @Injectable()
 export class LinkService {

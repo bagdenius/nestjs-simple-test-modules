@@ -11,7 +11,7 @@ import type { Request, Response } from 'express';
 import ms, { type StringValue } from 'ms';
 import type { JwtPayload } from '../../common/interfaces';
 import { isDev } from '../../common/utils';
-import { PrismaService } from '../../infra/prisma/prisma.service';
+import { PrismaService } from '../../infra/prisma';
 import { LoginInput, SignupInput } from './inputs';
 
 @Injectable()
