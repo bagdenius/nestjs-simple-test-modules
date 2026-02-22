@@ -11,6 +11,7 @@ import { ChatModule } from './chat/chat.module';
 import { FileModule } from './file/file.module';
 import { LinkModule } from './link/link.module';
 import { SpotifyModule } from './spotify/spotify.module';
+import { StatisticsModule } from './statistics/statistics.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 
@@ -25,6 +26,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     UserModule,
     LinkModule,
+    StatisticsModule,
     ChatModule,
     ArtistModule,
     TaskModule,
